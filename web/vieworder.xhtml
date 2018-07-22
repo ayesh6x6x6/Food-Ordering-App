@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+                <style>
+            table{
+                border-collapse: collapse;
+            }
+            td {
+    border: 1px solid black;
+}
+            .odd{
+                background-color: lightgray;
+            }
+            .even{
+                background-color: white;
+            }
+        </style>
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+        <script src="libraries/jquery.js"/>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </h:head>
+    <h:body>
+        <nav class="navbar navbar-default">
+                <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">FOOD4U</a>
+    </div>
+         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="registration.xhmtl">Register<span class="sr-only">(current)</span></a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="adminlogin.xhtml">Administrator</a></li>
+            <li><a href="login.xhtml">Customer</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+          <li class="active"><a href="vieworder.xhtml">Cart <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"><span id="cartweight"></span></span> </a></li>
+          
+      </ul>
+    </div><!-- /.navbar-collapse -->
+</nav>
+        <f:view>
+            <h1>#{rests.orders.custId.username} Please view your order!</h1>
+            <h:form>
+                <h:dataTable var="m" value="#{rests.orders.mealList}" rowClasses="odd,even">
+                    <f:facet name="header"> 
+                        Meals->
+                    </f:facet>
+
+                    <h:column>
+                        <f:facet name="header">Name</f:facet>
+                        <h:outputText value="#{m.mealName}"/>
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name="header">Description</f:facet>
+                        <h:outputText value="#{m.mealDescr}"/>
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name="header">Price</f:facet>
+                        <h:outputText value="#{m.price}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Promotions</f:facet>
+                        <h:outputText value="#{m.mealPromo.promoName}"/><br/>
+                        <h:outputText value="#{m.mealPromo.promoDescr}"/>
+                    </h:column>
+                    <h:column>
+                        <h:commandButton value="Remove" actionListener="#{rests.removeItem(m)}"/>
+                    </h:column>
+                    
+                    
+                </h:dataTable>
+                <h:outputText value="Choose a Payment Method"/>
+                <br/>
+                <h:selectOneRadio value="#{rests.paymentmethod}">
+                    <f:selectItem itemLabel="Credit Card" itemValue="Credit Card"/>
+                    <f:selectItem itemLabel="Cash on Delivery" itemValue="Cash on Delivery"/>
+                </h:selectOneRadio>
+                <h:commandButton value="Place Order" action="viewbill" actionListener="#{rests.addOrder()}"/>
+            </h:form>
+        </f:view>
+    </h:body>
+</html>
+
